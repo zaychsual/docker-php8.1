@@ -1,0 +1,69 @@
+version: "3.7"
+services:
+  redis8.1:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    container_name: redis8.1
+    networks:
+      - php8.1
+
+  jws-api:
+    build:
+      args:
+        user: zaynd
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: php8.1
+    container_name: jws-api
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./ess-api:/var/www
+    networks:
+      - php8.1
+
+  jws-fe:
+    build:
+      args:
+        user: zaynd
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: php8.1
+    container_name: jws-fe
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./ess-web:/var/www
+    networks:
+      - php8.1
+
+  nginx-api:
+    image: nginx:alpine
+    container_name: nginx-api
+    restart: unless-stopped
+    ports:
+      - 8888:80
+    volumes:
+      - ./ess-api:/var/www
+      - ./config/nginx-api:/etc/nginx/conf.d/
+    networks:
+      - php8.1
+
+  nginx-fe:
+    image: nginx:alpine
+    container_name: nginx-fe
+    restart: unless-stopped
+    ports:
+      - 8282:80
+    volumes:
+      - ./ess-web:/var/www
+      - ./config/nginx-fe:/etc/nginx/conf.d/
+    networks:
+      - php8.1
+
+networks:
+  php8.1:
+    driver: bridge
