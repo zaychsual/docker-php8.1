@@ -64,7 +64,7 @@ services:
     networks:
       - php8.1
 
-  test-product:
+  lara-product:
     build:
       args:
         user: zaynd
@@ -72,11 +72,11 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: php8.1
-    container_name: test-product
+    container_name: lara-product
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ./test-product:/var/www
+      - ./lara-product:/var/www
     networks:
       - php8.1
 
@@ -87,7 +87,7 @@ services:
     ports:
       - 8182:80
     volumes:
-      - ./test-product:/var/www
+      - ./lara-product:/var/www
       - ./config/nginx-test:/etc/nginx/conf.d/
     networks:
       - php8.1
