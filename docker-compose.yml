@@ -92,6 +92,34 @@ services:
     networks:
       - php8.1
 
+  be-ecomm:
+    build:
+      args:
+        user: zaynd
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: php8.1
+    container_name: be-ecomm
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./be-ecommerce:/var/www
+    networks:
+      - php8.1
+
+  nginx-ecom:
+    image: nginx:alpine
+    container_name: nginx-ecom
+    restart: unless-stopped
+    ports:
+      - 8183:80
+    volumes:
+      - ./be-ecommerce:/var/www
+      - ./config/nginx-ecom:/etc/nginx/conf.d/
+    networks:
+      - php8.1
+
 networks:
   php8.1:
     driver: bridge
