@@ -160,7 +160,7 @@ services:
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ./cpit:/var/www
+      - ./test-loop:/var/www
     networks:
       - php8.1
 
