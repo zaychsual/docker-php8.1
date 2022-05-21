@@ -1,4 +1,5 @@
 ess-api/
+cpit/
 ess-web/
 credential/
 lara-product/
@@ -7,3 +8,5 @@ vue-ecommerce/
 vue-product/
 holidayreplacement
 holidayreplacement.xlsx
+cpit.zip
+test-loop/
