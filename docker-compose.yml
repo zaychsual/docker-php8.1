@@ -64,7 +64,7 @@ services:
     networks:
       - php8.1
 
-  lara-product:
+  test-loop:
     build:
       args:
         user: zaynd
@@ -72,23 +72,23 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: php8.1
-    container_name: lara-product
+    container_name: test-loop
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ./lara-product:/var/www
+      - ./test-loop:/var/www
     networks:
       - php8.1
 
-  nginx-test:
+  nginx-loop:
     image: nginx:alpine
-    container_name: nginx-test
+    container_name: nginx-loop
     restart: unless-stopped
     ports:
-      - 8182:80
+      - 8186:80
     volumes:
-      - ./lara-product:/var/www
-      - ./config/nginx-test:/etc/nginx/conf.d/
+      - ./test-loop:/var/www
+      - ./config/nginx-loop:/etc/nginx/conf.d/
     networks:
       - php8.1
 
@@ -147,8 +147,8 @@ services:
       - ./config/nginx-compro:/etc/nginx/conf.d/
     networks:
       - php8.1
-
-  test-loop:
+      
+  be-donasi:
     build:
       args:
         user: zaynd
@@ -156,23 +156,23 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: php8.1
-    container_name: test-loop
+    container_name: be-donasi
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ./test-loop:/var/www
+      - ./be-donasi:/var/www
     networks:
       - php8.1
 
-  nginx-loop:
+  nginx-donasi:
     image: nginx:alpine
-    container_name: nginx-loop
+    container_name: nginx-donasi
     restart: unless-stopped
     ports:
       - 8185:80
     volumes:
-      - ./test-loop:/var/www
-      - ./config/nginx-loop:/etc/nginx/conf.d/
+      - ./be-donasi:/var/www
+      - ./config/nginx-donasi:/etc/nginx/conf.d/
     networks:
       - php8.1
 
