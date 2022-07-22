@@ -6,6 +6,12 @@ ARG uid
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
+    libjpeg62-turbo-dev \
+    apt-transport-https \
+    libfreetype6-dev \
+    libmcrypt-dev \
+    libpng12-dev \
+    libssl-dev \
     git \
     curl \
     libpng-dev \
@@ -21,6 +27,8 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-install -j$(nproc)
 RUN docker-php-ext-install pdo pgsql pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # RUN docker-php-ext-configure zip

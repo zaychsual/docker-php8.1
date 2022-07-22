@@ -85,7 +85,7 @@ services:
     container_name: nginx-loop
     restart: unless-stopped
     ports:
-      - 8186:80
+      - 8182:80
     volumes:
       - ./test-loop:/var/www
       - ./config/nginx-loop:/etc/nginx/conf.d/
@@ -173,6 +173,34 @@ services:
     volumes:
       - ./be-donasi:/var/www
       - ./config/nginx-donasi:/etc/nginx/conf.d/
+    networks:
+      - php8.1
+
+  travelaja:
+    build:
+      args:
+        user: zaynd
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: php8.1
+    container_name: travelaja
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./travelaja:/var/www
+    networks:
+      - php8.1
+
+  nginx-travelaja:
+    image: nginx:alpine
+    container_name: nginx-travelaja
+    restart: unless-stopped
+    ports:
+      - 8186:80
+    volumes:
+      - ./travelaja:/var/www
+      - ./config/nginx-travelaja:/etc/nginx/conf.d/
     networks:
       - php8.1
 
