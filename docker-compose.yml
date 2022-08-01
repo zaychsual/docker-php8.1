@@ -63,8 +63,8 @@ services:
       - ./config/nginx-fe:/etc/nginx/conf.d/
     networks:
       - php8.1
-
-  test-loop:
+  
+  app2u:
     build:
       args:
         user: zaynd
@@ -72,23 +72,23 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: php8.1
-    container_name: test-loop
+    container_name: app2u
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ./test-loop:/var/www
+      - ./app2u:/var/www
     networks:
       - php8.1
 
-  nginx-loop:
+  nginx-app2u:
     image: nginx:alpine
-    container_name: nginx-loop
+    container_name: nginx-app2u
     restart: unless-stopped
     ports:
       - 8182:80
     volumes:
-      - ./test-loop:/var/www
-      - ./config/nginx-loop:/etc/nginx/conf.d/
+      - ./app2u:/var/www
+      - ./config/nginx-app2u:/etc/nginx/conf.d/
     networks:
       - php8.1
 
