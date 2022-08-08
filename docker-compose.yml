@@ -204,6 +204,34 @@ services:
     networks:
       - php8.1
 
+  safety:
+    build:
+      args:
+        user: zaynd
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: php8.1
+    container_name: safety
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./safety-inspector:/var/www
+    networks:
+      - php8.1
+
+  nginx-safety:
+    image: nginx:alpine
+    container_name: nginx-safety
+    restart: unless-stopped
+    ports:
+      - 8187:80
+    volumes:
+      - ./safety-inspector:/var/www
+      - ./config/nginx-safety:/etc/nginx/conf.d/
+    networks:
+      - php8.1
+
 networks:
   php8.1:
     driver: bridge
