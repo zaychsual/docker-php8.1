@@ -232,6 +232,34 @@ services:
     networks:
       - php8.1
 
+  husna:
+    build:
+      args:
+        user: zaynd
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: php8.1
+    container_name: husna
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./madal-husna:/var/www
+    networks:
+      - php8.1
+
+  nginx-husna:
+    image: nginx:alpine
+    container_name: nginx-husna
+    restart: unless-stopped
+    ports:
+      - 8188:80
+    volumes:
+      - ./madal-husna:/var/www
+      - ./config/nginx-husna:/etc/nginx/conf.d/
+    networks:
+      - php8.1
+
 networks:
   php8.1:
     driver: bridge
